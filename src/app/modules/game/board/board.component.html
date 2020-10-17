@@ -1,0 +1,15 @@
+<mat-card class="board-card" *ngIf="!!board">
+  <mat-card-content>
+    <table class="board-card__board-table">
+      <tr *ngFor="let row of board.tiles">
+        <td
+          class="board-card__board-table__board-tile"
+          [ngClass]="{ 'board-card__board-table__board-tile__empty': column == null }"
+          *ngFor="let column of row"
+        >
+          <span *ngIf="!!column">{{ column.value }}</span>
+        </td>
+      </tr>
+    </table>
+  </mat-card-content>
+</mat-card>

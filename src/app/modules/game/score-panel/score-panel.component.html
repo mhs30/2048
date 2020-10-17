@@ -1,0 +1,4 @@
+<mat-form-field *ngIf="!!board" class="score-counter">
+  <mat-label>Score</mat-label>
+  <input matInput [value]="board.score" readonly />
+</mat-form-field>

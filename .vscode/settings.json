@@ -1,0 +1,10 @@
+{
+  "editor.formatOnSave": true,
+  "files.trimTrailingWhitespace": true,
+  "tslint.configFile": "tslint.json",
+  "tslint.autoFixOnSave": true,
+  "prettier.tslintIntegration": true,
+  "prettier.requireConfig": true,
+  "html.format.enable": true,
+  "html.format.wrapAttributes": "force"
+}
