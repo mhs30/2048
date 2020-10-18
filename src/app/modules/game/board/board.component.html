@@ -1,16 +1,47 @@
-<mat-card class="board-card" *ngIf="!!board">
-  <mat-card-content>
-    <table class="board-card__board-table">
-      <tr *ngFor="let row of board.tiles">
-        <td
-          class="board-card__board-table__board-tile"
-          [ngClass]="{ 'board-card__board-table__board-tile__empty': column == null }"
-          [style.backgroundColor]="!!column ? findColor(column.value) : '#ededed'"
-          *ngFor="let column of row"
-        >
-          <span *ngIf="!!column" [style.backgroundColor]="">{{ column.value }}</span>
-        </td>
-      </tr>
-    </table>
-  </mat-card-content>
+<div class="board-card placeholder-board">
+  <div class="board-card__board-table">
+    <div class="board-card__board-table__row">
+      <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
+      <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
+      <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
+      <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
+    </div>
+    <div class="board-card__board-table__row">
+      <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
+      <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
+      <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
+      <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
+    </div>
+    <div class="board-card__board-table__row">
+      <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
+      <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
+      <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
+      <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
+    </div>
+    <div class="board-card__board-table__row">
+      <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
+      <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
+      <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
+      <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!!board" class="board-card">
+  <div class="board-card__board-table">
+    <div class="board-card__board-table__row" *ngFor="let row of board.tiles">
+      <div
+        class="board-card__board-table__board-tile"
+        [class]="!!column ? column.animationClass : ''"
+        [ngClass]="{ 'board-card__board-table__board-tile__empty': column == null, 'new-tile': !!column && column.isNew }"
+        [style.backgroundColor]="!!column ? findColor(column.value) : '#ededed'"
+        *ngFor="let column of row"
+      >
+        <span *ngIf="!!column">{{ column.value }}</span>
+      </div>
+    </div>
+  </div>
+</div>
+<mat-card class="board-card">
+  <mat-card-content> </mat-card-content>
 </mat-card>

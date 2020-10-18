@@ -28,3 +28,10 @@ export const COLOR_CODES = new Map([
   [4, 'rgba(156,214,205, 1)'],
   [2, 'rgba(178,235,242, 1)'],
 ]);
+
+export enum ANIMATION_CLASS {
+  MOVE_TOP = 'move-top-',
+  MOVE_DOWN = 'move-down-',
+  MOVE_RIGHT = 'move-right-',
+  MOVE_LEFT = 'move-left-',
+}

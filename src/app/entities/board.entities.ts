@@ -1,4 +1,4 @@
-import { ALLOWED_MOVES, BOARD_COLUMNS, BOARD_ROWS } from './constants.entities';
+import { ALLOWED_MOVES, ANIMATION_CLASS, BOARD_COLUMNS, BOARD_ROWS } from './constants.entities';
 import { Tile } from './tile.entities';
 
 export class Board {
@@ -12,11 +12,11 @@ export class Board {
   new(): void {
     this.score = 0;
     this.tiles = [...Array(this.rows)].map((x) => Array(this.columns).fill(null));
-    this.generateNewTiles();
+    this.generateRandomTile();
+    this.generateRandomTile();
   }
 
   public generateNewTiles(): void {
-    this.generateRandomTile();
     this.generateRandomTile();
   }
 
@@ -62,43 +62,61 @@ export class Board {
     /*
 
     TODO:
-
     Animacion al moverse ?
     Mensaje de victoria y derrota
 
     */
+    this.setTilesNotNew();
     switch (direction) {
       case ALLOWED_MOVES.UP:
         this.moveTilesTop();
-        this.mergeTilesTop();
+        setTimeout(() => {
+          this.mergeTilesTop();
+        }, 500);
         break;
       case ALLOWED_MOVES.RIGHT:
         this.moveTilesRight();
-        this.mergeTilesRight();
+        setTimeout(() => {
+          this.mergeTilesRight();
+        }, 500);
         break;
       case ALLOWED_MOVES.DOWN:
         this.moveTilesDown();
-        this.mergeTilesDown();
+        setTimeout(() => {
+          this.mergeTilesDown();
+        }, 500);
         break;
       case ALLOWED_MOVES.LEFT:
         this.moveTilesLeft();
-        this.mergeTilesLeft();
+        setTimeout(() => {
+          this.mergeTilesLeft();
+        }, 500);
         break;
     }
+  }
+
+  private setTilesNotNew(): void {
+    this.tiles.forEach((row) => {
+      row.forEach((col) => {
+        if (!!col) {
+          col.isNew = false;
+        }
+      });
+    });
   }
 
   private moveTilesTop(): void {
     for (let i = 0; i < this.tiles.length; i += 1) {
       let spaceCounter = 0;
       for (let j = 0; j < this.tiles[i].length; j += 1) {
-        const tile = this.tiles[j][i];
-        if (tile == null) {
-          spaceCounter += 1;
-        } else {
-          this.tiles[j - spaceCounter][i] = { ...tile };
+        if (!!this.tiles[j][i]) {
+          this.tiles[j - spaceCounter][i] = { ...this.tiles[j][i] };
+          this.tiles[j - spaceCounter][i].animationClass = `${ANIMATION_CLASS.MOVE_TOP}${spaceCounter}`;
           if (spaceCounter > 0) {
             this.tiles[j][i] = null;
           }
+        } else {
+          spaceCounter += 1;
         }
       }
     }
@@ -107,9 +125,14 @@ export class Board {
   private mergeTilesTop(): void {
     for (let i = 0; i < this.tiles.length; i += 1) {
       for (let j = 0; j < this.tiles[i].length; j += 1) {
-        const tile = this.tiles[j][i];
-        if (!!tile && !!this.tiles[j + 1] && !!this.tiles[j + 1][i] && tile.value === this.tiles[j + 1][i].value) {
-          this.tiles[j][i].value = tile.value * 2;
+        if (
+          !!this.tiles[j][i] &&
+          !!this.tiles[j + 1] &&
+          !!this.tiles[j + 1][i] &&
+          this.tiles[j][i].value === this.tiles[j + 1][i].value
+        ) {
+          this.tiles[j][i].value = this.tiles[j][i].value * 2;
+          this.tiles[j][i].animationClass = `${ANIMATION_CLASS.MOVE_TOP}${1}`;
           this.addScore(this.tiles[j][i].value);
           this.tiles[j + 1][i] = null;
           this.moveTilesTop();
@@ -122,14 +145,14 @@ export class Board {
     for (let i = this.tiles.length - 1; i >= 0; i -= 1) {
       let spaceCounter = 0;
       for (let j = this.tiles[i].length - 1; j >= 0; j -= 1) {
-        const tile = this.tiles[j][i];
-        if (tile == null) {
-          spaceCounter += 1;
-        } else {
-          this.tiles[j + spaceCounter][i] = { ...tile };
+        if (!!this.tiles[j][i]) {
+          this.tiles[j + spaceCounter][i] = { ...this.tiles[j][i] };
+          this.tiles[j + spaceCounter][i].animationClass = `${ANIMATION_CLASS.MOVE_DOWN}${spaceCounter}`;
           if (spaceCounter > 0) {
             this.tiles[j][i] = null;
           }
+        } else {
+          spaceCounter += 1;
         }
       }
     }
@@ -138,9 +161,14 @@ export class Board {
   private mergeTilesDown(): void {
     for (let i = this.tiles.length - 1; i >= 0; i -= 1) {
       for (let j = this.tiles[i].length - 1; j >= 0; j -= 1) {
-        const tile = this.tiles[j][i];
-        if (!!tile && !!this.tiles[j - 1] && !!this.tiles[j - 1][i] && tile.value === this.tiles[j - 1][i].value) {
-          this.tiles[j][i].value = tile.value * 2;
+        if (
+          !!this.tiles[j][i] &&
+          !!this.tiles[j - 1] &&
+          !!this.tiles[j - 1][i] &&
+          this.tiles[j][i].value === this.tiles[j - 1][i].value
+        ) {
+          this.tiles[j][i].value = this.tiles[j][i].value * 2;
+          this.tiles[j][i].animationClass = `${ANIMATION_CLASS.MOVE_DOWN}${1}`;
           this.addScore(this.tiles[j][i].value);
           this.tiles[j - 1][i] = null;
           this.moveTilesDown();
@@ -153,14 +181,14 @@ export class Board {
     for (let i = 0; i < this.tiles.length; i += 1) {
       let spaceCounter = 0;
       for (let j = this.tiles[i].length - 1; j >= 0; j -= 1) {
-        const tile = this.tiles[i][j];
-        if (tile == null) {
-          spaceCounter += 1;
-        } else {
-          this.tiles[i][j + spaceCounter] = { ...tile };
+        if (!!this.tiles[i][j]) {
+          this.tiles[i][j + spaceCounter] = { ...this.tiles[i][j] };
+          this.tiles[i][j + spaceCounter].animationClass = `${ANIMATION_CLASS.MOVE_RIGHT}${spaceCounter}`;
           if (spaceCounter > 0) {
             this.tiles[i][j] = null;
           }
+        } else {
+          spaceCounter += 1;
         }
       }
     }
@@ -169,9 +197,9 @@ export class Board {
   private mergeTilesRight(): void {
     for (let i = 0; i < this.tiles.length; i += 1) {
       for (let j = this.tiles[i].length - 1; j >= 0; j -= 1) {
-        const tile = this.tiles[i][j];
-        if (!!tile && !!this.tiles[i][j - 1] && tile.value === this.tiles[i][j - 1].value) {
-          this.tiles[i][j].value = tile.value * 2;
+        if (!!this.tiles[i][j] && !!this.tiles[i][j - 1] && this.tiles[i][j].value === this.tiles[i][j - 1].value) {
+          this.tiles[i][j].value = this.tiles[i][j].value * 2;
+          this.tiles[i][j].animationClass = `${ANIMATION_CLASS.MOVE_RIGHT}${1}`;
           this.addScore(this.tiles[i][j].value);
           this.tiles[i][j - 1] = null;
           this.moveTilesRight();
@@ -184,14 +212,14 @@ export class Board {
     for (let i = 0; i < this.tiles.length; i += 1) {
       let spaceCounter = 0;
       for (let j = 0; j < this.tiles[i].length; j += 1) {
-        const tile = this.tiles[i][j];
-        if (tile == null) {
-          spaceCounter += 1;
-        } else {
-          this.tiles[i][j - spaceCounter] = { ...tile };
+        if (!!this.tiles[i][j]) {
+          this.tiles[i][j - spaceCounter] = { ...this.tiles[i][j] };
+          this.tiles[i][j - spaceCounter].animationClass = `${ANIMATION_CLASS.MOVE_LEFT}${spaceCounter}`;
           if (spaceCounter > 0) {
             this.tiles[i][j] = null;
           }
+        } else {
+          spaceCounter += 1;
         }
       }
     }
@@ -200,9 +228,9 @@ export class Board {
   private mergeTilesLeft(): void {
     for (let i = 0; i < this.tiles.length; i += 1) {
       for (let j = 0; j < this.tiles[i].length; j += 1) {
-        const tile = this.tiles[i][j];
-        if (!!tile && !!this.tiles[i][j + 1] && tile.value === this.tiles[i][j + 1].value) {
-          this.tiles[i][j].value = tile.value * 2;
+        if (!!this.tiles[i][j] && !!this.tiles[i][j + 1] && this.tiles[i][j].value === this.tiles[i][j + 1].value) {
+          this.tiles[i][j].value = this.tiles[i][j].value * 2;
+          this.tiles[i][j].animationClass = `${ANIMATION_CLASS.MOVE_LEFT}${1}`;
           this.addScore(this.tiles[i][j].value);
           this.tiles[i][j + 1] = null;
           this.moveTilesLeft();

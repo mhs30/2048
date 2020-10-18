@@ -1,8 +1,19 @@
 @import '../../../../styles.scss';
+@import '../../../../assets/animations.scss';
+.placeholder-board {
+  position: absolute;
+  &__empty {
+    opacity: 0.5;
+  }
+}
 .board-card {
   &__board-table {
     margin: 0 auto;
+    &__row {
+      display: flex;
+    }
     &__board-tile {
+      position: relative;
       border: 4px solid #009845;
       border-radius: 5px;
       padding: 1rem;
@@ -18,7 +29,7 @@
         display: block;
       }
       &__empty {
-        opacity: 0.5;
+        opacity: 0;
       }
     }
   }
@@ -36,5 +47,22 @@
         font-size: 16px;
       }
     }
+  }
+}
+
+.new-tile {
+  animation: zoominoutsinglefeatured 1s;
+  z-index: 15;
+}
+
+@keyframes zoominoutsinglefeatured {
+  0% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(1.2, 1.2);
+  }
+  100% {
+    transform: scale(1, 1);
   }
 }
