@@ -258,6 +258,7 @@ $altTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
 html,
 body {
   height: 100%;
+  overscroll-behavior-y: contain;
 }
 body {
   margin: 0;
@@ -270,4 +271,10 @@ mat-toolbar {
 }
 .mat-form-field-wrapper {
   width: 100px !important;
+}
+.d-flex {
+  display: flex;
+}
+.spacer {
+  flex: 1 1 auto;
 }

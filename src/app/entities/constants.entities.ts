@@ -35,3 +35,5 @@ export enum ANIMATION_CLASS {
   MOVE_RIGHT = 'move-right-',
   MOVE_LEFT = 'move-left-',
 }
+
+export const WIN_SCORE = 2048;

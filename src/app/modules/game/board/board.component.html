@@ -1,47 +1,47 @@
-<div class="board-card placeholder-board">
-  <div class="board-card__board-table">
-    <div class="board-card__board-table__row">
-      <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
-      <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
-      <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
-      <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
-    </div>
-    <div class="board-card__board-table__row">
-      <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
-      <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
-      <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
-      <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
-    </div>
-    <div class="board-card__board-table__row">
-      <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
-      <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
-      <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
-      <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
-    </div>
-    <div class="board-card__board-table__row">
-      <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
-      <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
-      <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
-      <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
-    </div>
-  </div>
-</div>
-
-<div *ngIf="!!board" class="board-card">
-  <div class="board-card__board-table">
-    <div class="board-card__board-table__row" *ngFor="let row of board.tiles">
-      <div
-        class="board-card__board-table__board-tile"
-        [class]="!!column ? column.animationClass : ''"
-        [ngClass]="{ 'board-card__board-table__board-tile__empty': column == null, 'new-tile': !!column && column.isNew }"
-        [style.backgroundColor]="!!column ? findColor(column.value) : '#ededed'"
-        *ngFor="let column of row"
-      >
-        <span *ngIf="!!column">{{ column.value }}</span>
+<div class="d-flex">
+  <div class="board-card placeholder-board">
+    <div class="board-card__board-table">
+      <div class="board-card__board-table__row">
+        <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
+        <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
+        <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
+        <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
+      </div>
+      <div class="board-card__board-table__row">
+        <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
+        <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
+        <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
+        <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
+      </div>
+      <div class="board-card__board-table__row">
+        <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
+        <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
+        <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
+        <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
+      </div>
+      <div class="board-card__board-table__row">
+        <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
+        <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
+        <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
+        <div class="board-card__board-table__board-tile placeholder-board__empty" [style.backgroundColor]="'#ededed'"></div>
       </div>
     </div>
   </div>
+
+  <div *ngIf="!!board" class="board-card">
+    <div class="board-card__board-table">
+      <div class="board-card__board-table__row" *ngFor="let row of board.tiles">
+        <div
+          class="board-card__board-table__board-tile"
+          [class]="!!column ? column.animationClass : ''"
+          [ngClass]="{ 'board-card__board-table__board-tile__empty': column == null, 'new-tile': !!column && column.isNew }"
+          [style.backgroundColor]="!!column ? findColor(column.value) : '#ededed'"
+          *ngFor="let column of row"
+        >
+          <span *ngIf="!!column">{{ column.value }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="spacer"></span>
 </div>
-<mat-card class="board-card">
-  <mat-card-content> </mat-card-content>
-</mat-card>

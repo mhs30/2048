@@ -6,10 +6,12 @@ export class Board {
   rows: number = BOARD_ROWS;
   tiles: Tile[][];
   score: number;
+  gameOver = false;
 
   constructor() {}
 
   new(): void {
+    this.gameOver = false;
     this.score = 0;
     this.tiles = [...Array(this.rows)].map((x) => Array(this.columns).fill(null));
     this.generateRandomTile();
@@ -39,8 +41,7 @@ export class Board {
       const newTilePos = { row: randomRow, col: randomCol };
       this.tiles[randomRow][randomCol] = new Tile(newTileVal, newTilePos);
     } else {
-      // Game Over
-      console.log('GAME OVER');
+      this.gameOver = true;
     }
   }
 
