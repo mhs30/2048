@@ -1,5 +1,5 @@
 {
-  "name": "qlik-assignment",
+  "name": "qlik-assignment-2048",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -32,6 +32,7 @@
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
+    "angular-cli-ghpages": "^0.6.2",
     "codelyzer": "^6.0.0",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",

@@ -5,9 +5,10 @@
         <td
           class="board-card__board-table__board-tile"
           [ngClass]="{ 'board-card__board-table__board-tile__empty': column == null }"
+          [style.backgroundColor]="!!column ? findColor(column.value) : '#ededed'"
           *ngFor="let column of row"
         >
-          <span *ngIf="!!column">{{ column.value }}</span>
+          <span *ngIf="!!column" [style.backgroundColor]="">{{ column.value }}</span>
         </td>
       </tr>
     </table>

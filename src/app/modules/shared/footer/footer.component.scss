@@ -1,0 +1,17 @@
+.spacer {
+  flex: 1 1 auto;
+}
+mat-toolbar {
+  position: absolute;
+  bottom: 0;
+  font-size: 14px;
+}
+mat-toolbar-row {
+  height: 32px;
+}
+.share-button {
+  position: fixed;
+  bottom: 60px;
+  right: 15px;
+  z-index: 10;
+}

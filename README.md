@@ -1,6 +1,10 @@
-# QlikAssignment
+# Qlik Front-End Assignment - 2048 game
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.7.
+
+## Live demo
+
+You can check a live demo [HERE](https://mhs30.github.io/qlik-2048).
 
 ## Development server
 
