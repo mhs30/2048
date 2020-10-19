@@ -18,7 +18,7 @@ export class GameService {
 
   public start(): void {
     this.board.new();
-    this.boardSubject.next(cloneDeep(this.board));
+    this.boardSubject.next(this.board);
   }
 
   public move(direction: string): void {
@@ -26,7 +26,7 @@ export class GameService {
       this.board.moveTiles(direction);
       setTimeout(() => {
         this.board.generateNewTiles();
-        this.boardSubject.next(cloneDeep(this.board));
+        this.boardSubject.next(this.board);
       }, 1000);
     }
   }
