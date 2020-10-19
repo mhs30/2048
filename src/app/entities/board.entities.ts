@@ -1,25 +1,53 @@
-import { ALLOWED_MOVES, ANIMATION_CLASS, BOARD_COLUMNS, BOARD_ROWS } from './constants.entities';
+import { ALLOWED_MOVES, ANIMATION_CLASS, BOARD_COLUMNS, BOARD_ROWS, SOUND_EFFECTS, WIN_SCORE } from './constants.entities';
 import { Tile } from './tile.entities';
-
+import { cloneDeep } from 'lodash';
 export class Board {
-  columns: number = BOARD_COLUMNS;
-  rows: number = BOARD_ROWS;
-  tiles: Tile[][];
-  score: number;
-  gameOver = false;
+  private columns: number = BOARD_COLUMNS;
+  private rows: number = BOARD_ROWS;
+  private tiles: Tile[][];
+  private score: number;
+  private gameOver = false;
+  private soundEnabled = true;
 
   constructor() {}
 
+  getTiles(): Tile[][] {
+    return this.tiles;
+  }
+  setTiles(tiles: Tile[][]): void {
+    this.tiles = tiles;
+  }
+  getScore(): number {
+    return this.score;
+  }
+  setScore(score: number): void {
+    this.score = score;
+  }
+  getGameOver(): boolean {
+    return this.gameOver;
+  }
+  setGameOver(val: boolean): void {
+    this.gameOver = val;
+  }
+  setSoundEnabled(val: boolean): void {
+    this.soundEnabled = val;
+  }
+  getSoundEnabled(): boolean {
+    return this.soundEnabled;
+  }
+
   new(): void {
     this.gameOver = false;
-    this.score = 0;
+    this.score = 2040;
     this.tiles = [...Array(this.rows)].map((x) => Array(this.columns).fill(null));
     this.generateRandomTile();
     this.generateRandomTile();
+    this.playSoundEffect(SOUND_EFFECTS.NEW_TILE);
   }
 
   public generateNewTiles(): void {
     this.generateRandomTile();
+    this.playSoundEffect(SOUND_EFFECTS.NEW_TILE);
   }
 
   private generateRandomTile(): void {
@@ -37,9 +65,7 @@ export class Board {
       const randomEmptyPosition = this.randomIntFromInterval(0, emptyPositions.length - 1);
       const randomRow = emptyPositions[randomEmptyPosition].row;
       const randomCol = emptyPositions[randomEmptyPosition].col;
-      const newTileVal = this.randomTileValue();
-      const newTilePos = { row: randomRow, col: randomCol };
-      this.tiles[randomRow][randomCol] = new Tile(newTileVal, newTilePos);
+      this.tiles[randomRow][randomCol] = new Tile();
     } else {
       this.gameOver = true;
     }
@@ -55,43 +81,44 @@ export class Board {
     return result;
   }
 
-  private randomTileValue(): number {
-    return Math.random() < 0.5 ? 2 : 4;
-  }
-
   public moveTiles(direction: string): void {
-    /*
-
-    TODO:
-    Animacion al moverse ?
-    Mensaje de victoria y derrota
-
-    */
     this.setTilesNotNew();
     switch (direction) {
       case ALLOWED_MOVES.UP:
         this.moveTilesTop();
         setTimeout(() => {
-          this.mergeTilesTop();
+          this.animateMergeTop();
         }, 500);
+        setTimeout(() => {
+          this.mergeTilesTop();
+        }, 1000);
         break;
       case ALLOWED_MOVES.RIGHT:
         this.moveTilesRight();
         setTimeout(() => {
-          this.mergeTilesRight();
+          this.animateMergeRight();
         }, 500);
+        setTimeout(() => {
+          this.mergeTilesRight();
+        }, 1000);
         break;
       case ALLOWED_MOVES.DOWN:
         this.moveTilesDown();
         setTimeout(() => {
-          this.mergeTilesDown();
+          this.animateMergeDown();
         }, 500);
+        setTimeout(() => {
+          this.mergeTilesDown();
+        }, 1000);
         break;
       case ALLOWED_MOVES.LEFT:
         this.moveTilesLeft();
         setTimeout(() => {
-          this.mergeTilesLeft();
+          this.animateMergeLeft();
         }, 500);
+        setTimeout(() => {
+          this.mergeTilesLeft();
+        }, 1000);
         break;
     }
   }
@@ -100,7 +127,7 @@ export class Board {
     this.tiles.forEach((row) => {
       row.forEach((col) => {
         if (!!col) {
-          col.isNew = false;
+          col.setIsNew(false);
         }
       });
     });
@@ -111,13 +138,30 @@ export class Board {
       let spaceCounter = 0;
       for (let j = 0; j < this.tiles[i].length; j += 1) {
         if (!!this.tiles[j][i]) {
-          this.tiles[j - spaceCounter][i] = { ...this.tiles[j][i] };
-          this.tiles[j - spaceCounter][i].animationClass = `${ANIMATION_CLASS.MOVE_TOP}${spaceCounter}`;
+          this.tiles[j - spaceCounter][i] = cloneDeep(this.tiles[j][i]);
+          this.tiles[j - spaceCounter][i].setAnimationClass(`${ANIMATION_CLASS.MOVE_TOP}${spaceCounter}`);
           if (spaceCounter > 0) {
             this.tiles[j][i] = null;
+            this.playSoundEffect(SOUND_EFFECTS.MOVE);
           }
         } else {
           spaceCounter += 1;
+        }
+      }
+    }
+  }
+
+  private animateMergeTop(): void {
+    for (let i = 0; i < this.tiles.length; i += 1) {
+      for (let j = 0; j < this.tiles[i].length; j += 1) {
+        if (
+          !!this.tiles[j][i] &&
+          !!this.tiles[j + 1] &&
+          !!this.tiles[j + 1][i] &&
+          this.tiles[j][i].getValue() === this.tiles[j + 1][i].getValue()
+        ) {
+          this.tiles[j + 1][i].setAnimationClass(ANIMATION_CLASS.MERGE_TOP);
+          this.playSoundEffect(SOUND_EFFECTS.MERGE);
         }
       }
     }
@@ -130,11 +174,10 @@ export class Board {
           !!this.tiles[j][i] &&
           !!this.tiles[j + 1] &&
           !!this.tiles[j + 1][i] &&
-          this.tiles[j][i].value === this.tiles[j + 1][i].value
+          this.tiles[j][i].getValue() === this.tiles[j + 1][i].getValue()
         ) {
-          this.tiles[j][i].value = this.tiles[j][i].value * 2;
-          this.tiles[j][i].animationClass = `${ANIMATION_CLASS.MOVE_TOP}${1}`;
-          this.addScore(this.tiles[j][i].value);
+          this.tiles[j][i].setValue(this.tiles[j][i].getValue() * 2);
+          this.addScore(this.tiles[j][i].getValue());
           this.tiles[j + 1][i] = null;
           this.moveTilesTop();
         }
@@ -147,13 +190,30 @@ export class Board {
       let spaceCounter = 0;
       for (let j = this.tiles[i].length - 1; j >= 0; j -= 1) {
         if (!!this.tiles[j][i]) {
-          this.tiles[j + spaceCounter][i] = { ...this.tiles[j][i] };
-          this.tiles[j + spaceCounter][i].animationClass = `${ANIMATION_CLASS.MOVE_DOWN}${spaceCounter}`;
+          this.tiles[j + spaceCounter][i] = cloneDeep(this.tiles[j][i]);
+          this.tiles[j + spaceCounter][i].setAnimationClass(`${ANIMATION_CLASS.MOVE_DOWN}${spaceCounter}`);
           if (spaceCounter > 0) {
             this.tiles[j][i] = null;
+            this.playSoundEffect(SOUND_EFFECTS.MOVE);
           }
         } else {
           spaceCounter += 1;
+        }
+      }
+    }
+  }
+
+  private animateMergeDown(): void {
+    for (let i = this.tiles.length - 1; i >= 0; i -= 1) {
+      for (let j = this.tiles[i].length - 1; j >= 0; j -= 1) {
+        if (
+          !!this.tiles[j][i] &&
+          !!this.tiles[j - 1] &&
+          !!this.tiles[j - 1][i] &&
+          this.tiles[j][i].getValue() === this.tiles[j - 1][i].getValue()
+        ) {
+          this.tiles[j - 1][i].setAnimationClass(ANIMATION_CLASS.MERGE_DOWN);
+          this.playSoundEffect(SOUND_EFFECTS.MERGE);
         }
       }
     }
@@ -166,11 +226,10 @@ export class Board {
           !!this.tiles[j][i] &&
           !!this.tiles[j - 1] &&
           !!this.tiles[j - 1][i] &&
-          this.tiles[j][i].value === this.tiles[j - 1][i].value
+          this.tiles[j][i].getValue() === this.tiles[j - 1][i].getValue()
         ) {
-          this.tiles[j][i].value = this.tiles[j][i].value * 2;
-          this.tiles[j][i].animationClass = `${ANIMATION_CLASS.MOVE_DOWN}${1}`;
-          this.addScore(this.tiles[j][i].value);
+          this.tiles[j][i].setValue(this.tiles[j][i].getValue() * 2);
+          this.addScore(this.tiles[j][i].getValue());
           this.tiles[j - 1][i] = null;
           this.moveTilesDown();
         }
@@ -183,10 +242,11 @@ export class Board {
       let spaceCounter = 0;
       for (let j = this.tiles[i].length - 1; j >= 0; j -= 1) {
         if (!!this.tiles[i][j]) {
-          this.tiles[i][j + spaceCounter] = { ...this.tiles[i][j] };
-          this.tiles[i][j + spaceCounter].animationClass = `${ANIMATION_CLASS.MOVE_RIGHT}${spaceCounter}`;
+          this.tiles[i][j + spaceCounter] = cloneDeep(this.tiles[i][j]);
+          this.tiles[i][j + spaceCounter].setAnimationClass(`${ANIMATION_CLASS.MOVE_RIGHT}${spaceCounter}`);
           if (spaceCounter > 0) {
             this.tiles[i][j] = null;
+            this.playSoundEffect(SOUND_EFFECTS.MOVE);
           }
         } else {
           spaceCounter += 1;
@@ -195,13 +255,23 @@ export class Board {
     }
   }
 
+  private animateMergeRight(): void {
+    for (let i = 0; i < this.tiles.length; i += 1) {
+      for (let j = this.tiles[i].length - 1; j >= 0; j -= 1) {
+        if (!!this.tiles[i][j] && !!this.tiles[i][j - 1] && this.tiles[i][j].getValue() === this.tiles[i][j - 1].getValue()) {
+          this.tiles[i][j - 1].setAnimationClass(ANIMATION_CLASS.MERGE_RIGHT);
+          this.playSoundEffect(SOUND_EFFECTS.MERGE);
+        }
+      }
+    }
+  }
+
   private mergeTilesRight(): void {
     for (let i = 0; i < this.tiles.length; i += 1) {
       for (let j = this.tiles[i].length - 1; j >= 0; j -= 1) {
-        if (!!this.tiles[i][j] && !!this.tiles[i][j - 1] && this.tiles[i][j].value === this.tiles[i][j - 1].value) {
-          this.tiles[i][j].value = this.tiles[i][j].value * 2;
-          this.tiles[i][j].animationClass = `${ANIMATION_CLASS.MOVE_RIGHT}${1}`;
-          this.addScore(this.tiles[i][j].value);
+        if (!!this.tiles[i][j] && !!this.tiles[i][j - 1] && this.tiles[i][j].getValue() === this.tiles[i][j - 1].getValue()) {
+          this.tiles[i][j].setValue(this.tiles[i][j].getValue() * 2);
+          this.addScore(this.tiles[i][j].getValue());
           this.tiles[i][j - 1] = null;
           this.moveTilesRight();
         }
@@ -214,10 +284,11 @@ export class Board {
       let spaceCounter = 0;
       for (let j = 0; j < this.tiles[i].length; j += 1) {
         if (!!this.tiles[i][j]) {
-          this.tiles[i][j - spaceCounter] = { ...this.tiles[i][j] };
-          this.tiles[i][j - spaceCounter].animationClass = `${ANIMATION_CLASS.MOVE_LEFT}${spaceCounter}`;
+          this.tiles[i][j - spaceCounter] = cloneDeep(this.tiles[i][j]);
+          this.tiles[i][j - spaceCounter].setAnimationClass(`${ANIMATION_CLASS.MOVE_LEFT}${spaceCounter}`);
           if (spaceCounter > 0) {
             this.tiles[i][j] = null;
+            this.playSoundEffect(SOUND_EFFECTS.MOVE);
           }
         } else {
           spaceCounter += 1;
@@ -226,13 +297,23 @@ export class Board {
     }
   }
 
+  private animateMergeLeft(): void {
+    for (let i = 0; i < this.tiles.length; i += 1) {
+      for (let j = 0; j < this.tiles[i].length; j += 1) {
+        if (!!this.tiles[i][j] && !!this.tiles[i][j + 1] && this.tiles[i][j].getValue() === this.tiles[i][j + 1].getValue()) {
+          this.tiles[i][j + 1].setAnimationClass(ANIMATION_CLASS.MERGE_LEFT);
+          this.playSoundEffect(SOUND_EFFECTS.MERGE);
+        }
+      }
+    }
+  }
+
   private mergeTilesLeft(): void {
     for (let i = 0; i < this.tiles.length; i += 1) {
       for (let j = 0; j < this.tiles[i].length; j += 1) {
-        if (!!this.tiles[i][j] && !!this.tiles[i][j + 1] && this.tiles[i][j].value === this.tiles[i][j + 1].value) {
-          this.tiles[i][j].value = this.tiles[i][j].value * 2;
-          this.tiles[i][j].animationClass = `${ANIMATION_CLASS.MOVE_LEFT}${1}`;
-          this.addScore(this.tiles[i][j].value);
+        if (!!this.tiles[i][j] && !!this.tiles[i][j + 1] && this.tiles[i][j].getValue() === this.tiles[i][j + 1].getValue()) {
+          this.tiles[i][j].setValue(this.tiles[i][j].getValue() * 2);
+          this.addScore(this.tiles[i][j].getValue());
           this.tiles[i][j + 1] = null;
           this.moveTilesLeft();
         }
@@ -242,5 +323,31 @@ export class Board {
 
   private addScore(acum: number): void {
     this.score += acum;
+    if (this.score >= WIN_SCORE) {
+      this.playSoundEffect(SOUND_EFFECTS.VICTORY);
+    }
+  }
+
+  private playSoundEffect(effect: string): void {
+    if (this.soundEnabled) {
+      const audio = new Audio();
+      audio.src = effect;
+      switch (effect) {
+        case SOUND_EFFECTS.MERGE:
+          audio.volume = 0.75;
+          break;
+        case SOUND_EFFECTS.MOVE:
+          audio.volume = 0.35;
+          break;
+        case SOUND_EFFECTS.NEW_TILE:
+          audio.volume = 0.25;
+          break;
+        case SOUND_EFFECTS.VICTORY:
+          audio.volume = 0.8;
+          break;
+      }
+      audio.load();
+      audio.play();
+    }
   }
 }

@@ -23,6 +23,7 @@ export class GameService {
 
   public move(direction: string): void {
     this.board.moveTiles(direction);
+
     setTimeout(() => {
       this.board.generateNewTiles();
       this.boardSubject.next(this.board);

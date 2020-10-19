@@ -34,6 +34,19 @@ export enum ANIMATION_CLASS {
   MOVE_DOWN = 'move-down-',
   MOVE_RIGHT = 'move-right-',
   MOVE_LEFT = 'move-left-',
+  MERGE_TOP = 'merge-top',
+  MERGE_DOWN = 'merge-down',
+  MERGE_RIGHT = 'merge-right',
+  MERGE_LEFT = 'merge-left',
 }
 
 export const WIN_SCORE = 2048;
+
+export enum SOUND_EFFECTS {
+  MERGE = 'assets/sound/merge.mp3',
+  NEW_TILE = 'assets/sound/new-tile.mp3',
+  MOVE = 'assets/sound/move.mp3',
+  VICTORY = 'assets/sound/victory.mp3',
+}
+
+export const LOCAL_STORAGE_KEY = 'QLIK-2048-SCORE';

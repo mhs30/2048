@@ -3,7 +3,7 @@ import { Board } from 'src/app/entities/board.entities';
 import { GameService } from 'src/app/services/game.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { ALLOWED_MOVES, ARROW_KEY_CODES, COLOR_CODES } from 'src/app/entities/constants.entities';
+import { ALLOWED_MOVES, ARROW_KEY_CODES, BOARD_COLUMNS, BOARD_ROWS, COLOR_CODES } from 'src/app/entities/constants.entities';
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
@@ -11,6 +11,7 @@ import { ALLOWED_MOVES, ARROW_KEY_CODES, COLOR_CODES } from 'src/app/entities/co
 })
 export class BoardComponent implements OnInit, OnDestroy {
   private defaultTouch = { x: 0, y: 0, time: 0 };
+  public placeholderBoard: any[][];
   public board: Board;
 
   private unsuscribe$ = new Subject<boolean>();
@@ -69,7 +70,9 @@ export class BoardComponent implements OnInit, OnDestroy {
     }
   }
 
-  constructor(private gameService: GameService) {}
+  constructor(private gameService: GameService) {
+    this.placeholderBoard = [...Array(BOARD_ROWS)].map((x) => Array(BOARD_COLUMNS).fill(null));
+  }
 
   ngOnInit(): void {
     this.gameService.board$.pipe(takeUntil(this.unsuscribe$)).subscribe((board: Board) => {

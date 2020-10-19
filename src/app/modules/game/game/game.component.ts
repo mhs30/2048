@@ -1,5 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
-import { ALLOWED_MOVES, ARROW_KEY_CODES } from 'src/app/entities/constants.entities';
+import { Component, OnInit } from '@angular/core';
 import { GameService } from 'src/app/services/game.service';
 
 @Component({

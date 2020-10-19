@@ -1,15 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-win-dialog',
   templateUrl: './win-dialog.component.html',
-  styleUrls: ['./win-dialog.component.scss']
+  styleUrls: ['./win-dialog.component.scss'],
 })
-export class WinDialogComponent implements OnInit {
+export class WinDialogComponent {
+  constructor(public dialogRef: MatDialogRef<WinDialogComponent>) {}
 
-  constructor() { }
-
-  ngOnInit(): void {
+  closeDialog(): void {
+    this.dialogRef.close(true);
   }
-
 }

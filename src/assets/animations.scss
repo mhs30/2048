@@ -1,18 +1,18 @@
 .move-top-1 {
   animation-name: slideTop1;
-  animation-duration: 1s;
+  animation-duration: 0.75s;
   animation-timing-function: ease;
   visibility: visible !important;
 }
 .move-top-2 {
   animation-name: slideTop2;
-  animation-duration: 1s;
+  animation-duration: 0.75s;
   animation-timing-function: ease;
   visibility: visible !important;
 }
 .move-top-3 {
   animation-name: slideTop3;
-  animation-duration: 1s;
+  animation-duration: 0.75s;
   animation-timing-function: ease;
   visibility: visible !important;
 }
@@ -69,19 +69,19 @@
 }
 .move-down-1 {
   animation-name: slideDown1;
-  animation-duration: 1s;
+  animation-duration: 0.75s;
   animation-timing-function: ease;
   visibility: visible !important;
 }
 .move-down-2 {
   animation-name: slideDown2;
-  animation-duration: 1s;
+  animation-duration: 0.75s;
   animation-timing-function: ease;
   visibility: visible !important;
 }
 .move-down-3 {
   animation-name: slideDown3;
-  animation-duration: 1s;
+  animation-duration: 0.75s;
   animation-timing-function: ease;
   visibility: visible !important;
 }
@@ -138,19 +138,19 @@
 }
 .move-right-1 {
   animation-name: slideRight1;
-  animation-duration: 1s;
+  animation-duration: 0.75s;
   animation-timing-function: ease;
   visibility: visible !important;
 }
 .move-right-2 {
   animation-name: slideRight2;
-  animation-duration: 1s;
+  animation-duration: 0.75s;
   animation-timing-function: ease;
   visibility: visible !important;
 }
 .move-right-3 {
   animation-name: slideRight3;
-  animation-duration: 1s;
+  animation-duration: 0.75s;
   animation-timing-function: ease;
   visibility: visible !important;
 }
@@ -207,19 +207,19 @@
 }
 .move-left-1 {
   animation-name: slideLeft1;
-  animation-duration: 1s;
+  animation-duration: 0.75s;
   animation-timing-function: ease;
   visibility: visible !important;
 }
 .move-left-2 {
   animation-name: slideLeft2;
-  animation-duration: 1s;
+  animation-duration: 0.75s;
   animation-timing-function: ease;
   visibility: visible !important;
 }
 .move-left-3 {
   animation-name: slideLeft3;
-  animation-duration: 1s;
+  animation-duration: 0.75s;
   animation-timing-function: ease;
   visibility: visible !important;
 }
@@ -272,5 +272,136 @@
   }
   100% {
     transform: translateX(0%);
+  }
+}
+.merge-top {
+  z-index: 15;
+  animation-name: mergeTop;
+  animation-duration: 0.5s;
+  animation-timing-function: ease;
+  visibility: visible !important;
+}
+@keyframes mergeTop {
+  0% {
+    transform: translateY(0%);
+    box-shadow: none;
+  }
+  50% {
+    transform: translateY(-104%);
+    box-shadow: 0px 6px 20px 0px rgba(0, 0, 0, 0.75);
+  }
+  65% {
+    transform: translateY(-98%);
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.75);
+  }
+  80% {
+    transform: translateY(-102%);
+  }
+  100% {
+    transform: translateY(-100%);
+    box-shadow: none;
+  }
+}
+.merge-down {
+  z-index: 15;
+  animation-name: mergeDown;
+  animation-duration: 0.5s;
+  animation-timing-function: ease;
+  visibility: visible !important;
+}
+@keyframes mergeDown {
+  0% {
+    transform: translateY(0%);
+    box-shadow: none;
+  }
+  50% {
+    transform: translateY(104%);
+    box-shadow: 0px 6px 20px 0px rgba(0, 0, 0, 0.75);
+  }
+  65% {
+    transform: translateY(98%);
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.75);
+  }
+  80% {
+    transform: translateY(102%);
+  }
+  100% {
+    transform: translateY(100%);
+    box-shadow: none;
+  }
+}
+
+.merge-right {
+  z-index: 15;
+  animation-name: mergeRight;
+  animation-duration: 0.5s;
+  animation-timing-function: ease;
+  visibility: visible !important;
+}
+@keyframes mergeRight {
+  0% {
+    transform: translateX(0%);
+    box-shadow: none;
+  }
+  50% {
+    transform: translateX(104%);
+    box-shadow: 0px 6px 20px 0px rgba(0, 0, 0, 0.75);
+  }
+  65% {
+    transform: translateX(98%);
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.75);
+  }
+  80% {
+    transform: translateX(102%);
+  }
+  100% {
+    transform: translateX(100%);
+    box-shadow: none;
+  }
+}
+
+.merge-left {
+  z-index: 15;
+  animation-name: mergeLeft;
+  animation-duration: 0.5s;
+  animation-timing-function: ease;
+  visibility: visible !important;
+}
+@keyframes mergeLeft {
+  0% {
+    transform: translateX(0%);
+    box-shadow: none;
+  }
+  50% {
+    transform: translateX(-104%);
+    box-shadow: 0px 6px 20px 0px rgba(0, 0, 0, 0.75);
+  }
+  65% {
+    transform: translateX(-98%);
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.75);
+  }
+  80% {
+    transform: translateX(-102%);
+  }
+  100% {
+    transform: translateX(-100%);
+    box-shadow: none;
+  }
+}
+
+.new-tile {
+  animation: zoominoutsinglefeatured 0.75s;
+  z-index: 15;
+}
+
+@keyframes zoominoutsinglefeatured {
+  0% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(1.2, 1.2);
+  }
+  100% {
+    transform: scale(1, 1);
   }
 }

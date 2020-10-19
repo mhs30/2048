@@ -1,4 +1,16 @@
-<mat-form-field *ngIf="!!board" class="score-counter">
-  <mat-label>Score</mat-label>
-  <input matInput [value]="board.score" readonly />
-</mat-form-field>
+<canvas id="conffeti-canvas"></canvas>
+<div class="d-flex">
+  <mat-form-field *ngIf="!!board" class="score-counter">
+    <mat-label>Score</mat-label>
+    <input matInput [value]="board.getScore()" readonly />
+  </mat-form-field>
+  <mat-form-field *ngIf="!!board" class="score-counter">
+    <mat-label>Best score</mat-label>
+    <input matInput [value]="getBestScore()" readonly />
+  </mat-form-field>
+  <span class="spacer"></span>
+  <button (click)="board.setSoundEnabled(!board.getSoundEnabled())" mat-fab class="volume-btn" color="">
+    <mat-icon *ngIf="board.getSoundEnabled()">volume_up</mat-icon>
+    <mat-icon *ngIf="!board.getSoundEnabled()">volume_off</mat-icon>
+  </button>
+</div>
