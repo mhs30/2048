@@ -1,7 +1,7 @@
 @import '../../../../styles.scss';
 @import '../../../../assets/animations.scss';
 .placeholder-board {
-  position: absolute;
+  position: relative;
   &__empty {
     opacity: 0.5;
   }

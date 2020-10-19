@@ -22,11 +22,12 @@ export class GameService {
   }
 
   public move(direction: string): void {
-    this.board.moveTiles(direction);
-
-    setTimeout(() => {
-      this.board.generateNewTiles();
-      this.boardSubject.next(this.board);
-    }, 1000);
+    if (!!this.board && !!this.board.getTiles()) {
+      this.board.moveTiles(direction);
+      setTimeout(() => {
+        this.board.generateNewTiles();
+        this.boardSubject.next(this.board);
+      }, 1000);
+    }
   }
 }

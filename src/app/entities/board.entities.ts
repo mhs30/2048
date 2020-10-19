@@ -38,7 +38,7 @@ export class Board {
 
   new(): void {
     this.gameOver = false;
-    this.score = 2040;
+    this.score = 0;
     this.tiles = [...Array(this.rows)].map((x) => Array(this.columns).fill(null));
     this.generateRandomTile();
     this.generateRandomTile();

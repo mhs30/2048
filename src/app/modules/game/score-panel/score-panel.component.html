@@ -2,7 +2,7 @@
 <div class="d-flex">
   <mat-form-field *ngIf="!!board" class="score-counter">
     <mat-label>Score</mat-label>
-    <input matInput [value]="board.getScore()" readonly />
+    <input matInput [value]="!!board && board.getScore() ? board.getScore() : 0" readonly />
   </mat-form-field>
   <mat-form-field *ngIf="!!board" class="score-counter">
     <mat-label>Best score</mat-label>
