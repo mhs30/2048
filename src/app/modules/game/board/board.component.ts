@@ -108,13 +108,15 @@ export class BoardComponent implements OnInit, OnDestroy {
         this.dialog.open(LoseDialogComponent);
         this.board.new();
       }
-      if (this.deviceService.isDesktop() && !!this.board && !!localStorage.getItem(LOCAL_STORAGE_KEY)) {
-        const currentSavedScore = parseInt(localStorage.getItem(LOCAL_STORAGE_KEY), 10);
-        if (!!this.board.getScore() && this.board.getScore() > currentSavedScore) {
+      if (this.deviceService.isDesktop()) {
+        if (!!this.board && !!localStorage.getItem(LOCAL_STORAGE_KEY)) {
+          const currentSavedScore = parseInt(localStorage.getItem(LOCAL_STORAGE_KEY), 10);
+          if (!!this.board.getScore() && this.board.getScore() > currentSavedScore) {
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.board.getScore().toString());
+          }
+        } else {
           localStorage.setItem(LOCAL_STORAGE_KEY, this.board.getScore().toString());
         }
-      } else {
-        localStorage.setItem(LOCAL_STORAGE_KEY, this.board.getScore().toString());
       }
     });
   }
