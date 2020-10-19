@@ -2,9 +2,15 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.7.
 
+This project uses [Angular Material](https://material.angular.io/) version 10.2.5.
+
 ## Live demo
 
-You can check a live demo [HERE](https://mhs30.github.io/qlik-2048).
+You can check a live demo [HERE](https://mario-herrero-siles.000webhostapp.com/2048/).
+
+## Install
+
+Run `npm install`
 
 ## Development server
 

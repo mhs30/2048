@@ -50,3 +50,9 @@ export enum SOUND_EFFECTS {
 }
 
 export const LOCAL_STORAGE_KEY = 'QLIK-2048-SCORE';
+
+export enum SOCIAL_LINKS {
+  LINKEDIN = 'https://linkedin.com/in/mario-herrero-siles-2b326212b',
+  CV = 'https://mario-herrero-siles.000webhostapp.com/cv/',
+  EMAIL = 'marioherrerosiles@gmail.com',
+}
