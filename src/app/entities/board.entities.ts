@@ -61,7 +61,7 @@ export class Board {
         }
       }
     }
-    if (!!emptyPositions && emptyPositions.length >= 2) {
+    if (!!emptyPositions && emptyPositions.length > 1) {
       const randomEmptyPosition = this.randomIntFromInterval(0, emptyPositions.length - 1);
       const randomRow = emptyPositions[randomEmptyPosition].row;
       const randomCol = emptyPositions[randomEmptyPosition].col;
