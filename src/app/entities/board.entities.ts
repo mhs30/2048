@@ -7,7 +7,7 @@ export class Board {
   private tiles: Tile[][];
   private score: number;
   private gameOver = false;
-  private soundEnabled = true;
+  private soundEnabled = false;
 
   constructor() {}
 
