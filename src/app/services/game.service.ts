@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Board } from '../entities/board.entities';
-
+import { cloneDeep } from 'lodash';
 @Injectable({
   providedIn: 'root',
 })
@@ -18,7 +18,7 @@ export class GameService {
 
   public start(): void {
     this.board.new();
-    this.boardSubject.next(this.board);
+    this.boardSubject.next(cloneDeep(this.board));
   }
 
   public move(direction: string): void {
@@ -26,7 +26,7 @@ export class GameService {
       this.board.moveTiles(direction);
       setTimeout(() => {
         this.board.generateNewTiles();
-        this.boardSubject.next(this.board);
+        this.boardSubject.next(cloneDeep(this.board));
       }, 1000);
     }
   }

@@ -3,7 +3,20 @@ import { Board } from 'src/app/entities/board.entities';
 import { GameService } from 'src/app/services/game.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { ALLOWED_MOVES, ARROW_KEY_CODES, BOARD_COLUMNS, BOARD_ROWS, COLOR_CODES } from 'src/app/entities/constants.entities';
+import {
+  ALLOWED_MOVES,
+  ARROW_KEY_CODES,
+  BOARD_COLUMNS,
+  BOARD_ROWS,
+  COLOR_CODES,
+  LOCAL_STORAGE_KEY,
+  WIN_SCORE,
+} from 'src/app/entities/constants.entities';
+import ConfettiGenerator from 'confetti-js';
+import { LoseDialogComponent } from '../../shared/lose-dialog/lose-dialog.component';
+import { WinDialogComponent } from '../../shared/win-dialog/win-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { DeviceDetectorService } from 'ngx-device-detector';
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
@@ -70,13 +83,39 @@ export class BoardComponent implements OnInit, OnDestroy {
     }
   }
 
-  constructor(private gameService: GameService) {
+  constructor(private gameService: GameService, public dialog: MatDialog, private deviceService: DeviceDetectorService) {
     this.placeholderBoard = [...Array(BOARD_ROWS)].map((x) => Array(BOARD_COLUMNS).fill(null));
   }
 
   ngOnInit(): void {
     this.gameService.board$.pipe(takeUntil(this.unsuscribe$)).subscribe((board: Board) => {
       this.board = board;
+      if (!!this.board && !!this.board.getScore() && this.board.getScore() >= WIN_SCORE) {
+        const confettiSettings = { target: 'conffeti-canvas' };
+        const confetti = new ConfettiGenerator(confettiSettings);
+        confetti.render();
+        this.board.new();
+        const dialogRef = this.dialog.open(WinDialogComponent);
+
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result) {
+            confetti.clear();
+            this.board.new();
+          }
+        });
+      }
+      if (!!this.board && this.board.getGameOver()) {
+        this.dialog.open(LoseDialogComponent);
+        this.board.new();
+      }
+      if (this.deviceService.isDesktop() && !!this.board && !!localStorage.getItem(LOCAL_STORAGE_KEY)) {
+        const currentSavedScore = parseInt(localStorage.getItem(LOCAL_STORAGE_KEY), 10);
+        if (!!this.board.getScore() && this.board.getScore() > currentSavedScore) {
+          localStorage.setItem(LOCAL_STORAGE_KEY, this.board.getScore().toString());
+        }
+      } else {
+        localStorage.setItem(LOCAL_STORAGE_KEY, this.board.getScore().toString());
+      }
     });
   }
 

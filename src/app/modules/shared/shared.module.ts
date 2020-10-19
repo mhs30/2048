@@ -12,8 +12,11 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { ShareBottomSheetComponent } from './footer/share-bottom-sheet/share-bottom-sheet.component';
 import { MatListModule } from '@angular/material/list';
 import { MatDialogModule } from '@angular/material/dialog';
+import { LoseDialogComponent } from './lose-dialog/lose-dialog.component';
+import { WinDialogComponent } from './win-dialog/win-dialog.component';
+
 @NgModule({
-  declarations: [NavbarComponent, FooterComponent, ShareBottomSheetComponent],
+  declarations: [NavbarComponent, FooterComponent, ShareBottomSheetComponent, WinDialogComponent, LoseDialogComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -39,5 +42,6 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatListModule,
     MatDialogModule,
   ],
+  entryComponents: [WinDialogComponent, LoseDialogComponent],
 })
 export class SharedModule {}

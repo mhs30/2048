@@ -4,7 +4,7 @@
     <mat-label>Score</mat-label>
     <input matInput [value]="!!board && board.getScore() ? board.getScore() : 0" readonly />
   </mat-form-field>
-  <mat-form-field *ngIf="!!board" class="score-counter">
+  <mat-form-field *ngIf="isDesktop && !!board" class="score-counter">
     <mat-label>Best score</mat-label>
     <input matInput [value]="getBestScore()" readonly />
   </mat-form-field>

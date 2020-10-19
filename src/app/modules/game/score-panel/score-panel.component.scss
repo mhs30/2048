@@ -5,6 +5,7 @@
 }
 #conffeti-canvas {
   position: fixed;
+  z-index: -15;
 }
 .volume-btn {
   margin-right: 1rem;
