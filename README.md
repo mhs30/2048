@@ -2,7 +2,15 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.7.
 
-This project uses [Angular Material](https://material.angular.io/) version 10.2.5.
+This project uses:
+
+[Angular Material](https://material.angular.io/) version 10.2.5
+
+[confetti-js](https://www.npmjs.com/package/confetti-js) version 0.0.18
+
+[lodash](https://lodash.com/) version ^4.17.20
+
+[ngx-device-detector](https://www.npmjs.com/package/ngx-device-detector) version ^2.0.0
 
 ## Live demo
 
