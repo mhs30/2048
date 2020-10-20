@@ -43,3 +43,35 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Features
+
+Header with title and button to start the game generating two tiles with values of either 2 or 4
+
+Grid to display multidimensional array of tiles with 4 rows and 4 columns
+
+Move tiles with arrow keys or touch swipe
+
+Merge tiles into one if they have the same value
+
+Tiles with same value share same color
+
+Dialogs for both victory - comes with conffeti animation, and defeat
+
+Animation/Transitions when tiles are moved, merged and spawned
+
+Score counter
+
+Best score stored on localStorage if played in Desktop
+
+Button to enable/disable sound effects
+
+Button to display bottom sheet with share information
+
+Button to display bottom sheet wth game information
+
+Footer
+
+Responsive Design for Web, Ipad & Mobile
+
+P.S. In case you are wondering about the second line in the footer here is the explanation: This weekend i had to take care of my uncle’s daughters and i let her choose the colors of the tiles from the Materialize Documentation to keep them busy while i was coding, then i added their name to the footer so they could share the game with their friends.
