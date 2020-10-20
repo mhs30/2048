@@ -14,9 +14,10 @@ import { MatListModule } from '@angular/material/list';
 import { MatDialogModule } from '@angular/material/dialog';
 import { LoseDialogComponent } from './lose-dialog/lose-dialog.component';
 import { WinDialogComponent } from './win-dialog/win-dialog.component';
+import { InfoBottomSheetComponent } from './footer/info-bottom-sheet/info-bottom-sheet.component';
 
 @NgModule({
-  declarations: [NavbarComponent, FooterComponent, ShareBottomSheetComponent, WinDialogComponent, LoseDialogComponent],
+  declarations: [NavbarComponent, FooterComponent, ShareBottomSheetComponent, WinDialogComponent, LoseDialogComponent, InfoBottomSheetComponent],
   imports: [
     CommonModule,
     FormsModule,

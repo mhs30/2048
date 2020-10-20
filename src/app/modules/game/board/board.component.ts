@@ -95,7 +95,7 @@ export class BoardComponent implements OnInit, OnDestroy {
         const confetti = new ConfettiGenerator(confettiSettings);
         confetti.render();
         this.board.new();
-        const dialogRef = this.dialog.open(WinDialogComponent);
+        const dialogRef = this.dialog.open(WinDialogComponent, { disableClose: true });
 
         dialogRef.afterClosed().subscribe((result) => {
           if (result) {

@@ -82,6 +82,7 @@ export class Board {
   }
 
   public moveTiles(direction: string): void {
+    this.playSoundEffect(SOUND_EFFECTS.MOVE);
     this.setTilesNotNew();
     switch (direction) {
       case ALLOWED_MOVES.UP:
@@ -142,7 +143,6 @@ export class Board {
           this.tiles[j - spaceCounter][i].setAnimationClass(`${ANIMATION_CLASS.MOVE_TOP}${spaceCounter}`);
           if (spaceCounter > 0) {
             this.tiles[j][i] = null;
-            this.playSoundEffect(SOUND_EFFECTS.MOVE);
           }
         } else {
           spaceCounter += 1;
@@ -194,7 +194,6 @@ export class Board {
           this.tiles[j + spaceCounter][i].setAnimationClass(`${ANIMATION_CLASS.MOVE_DOWN}${spaceCounter}`);
           if (spaceCounter > 0) {
             this.tiles[j][i] = null;
-            this.playSoundEffect(SOUND_EFFECTS.MOVE);
           }
         } else {
           spaceCounter += 1;
@@ -246,7 +245,6 @@ export class Board {
           this.tiles[i][j + spaceCounter].setAnimationClass(`${ANIMATION_CLASS.MOVE_RIGHT}${spaceCounter}`);
           if (spaceCounter > 0) {
             this.tiles[i][j] = null;
-            this.playSoundEffect(SOUND_EFFECTS.MOVE);
           }
         } else {
           spaceCounter += 1;
@@ -288,7 +286,6 @@ export class Board {
           this.tiles[i][j - spaceCounter].setAnimationClass(`${ANIMATION_CLASS.MOVE_LEFT}${spaceCounter}`);
           if (spaceCounter > 0) {
             this.tiles[i][j] = null;
-            this.playSoundEffect(SOUND_EFFECTS.MOVE);
           }
         } else {
           spaceCounter += 1;
@@ -334,16 +331,16 @@ export class Board {
       audio.src = effect;
       switch (effect) {
         case SOUND_EFFECTS.MERGE:
-          audio.volume = 0.75;
+          audio.volume = 0.15;
           break;
         case SOUND_EFFECTS.MOVE:
-          audio.volume = 0.35;
-          break;
-        case SOUND_EFFECTS.NEW_TILE:
           audio.volume = 0.25;
           break;
+        case SOUND_EFFECTS.NEW_TILE:
+          audio.volume = 0.2;
+          break;
         case SOUND_EFFECTS.VICTORY:
-          audio.volume = 0.8;
+          audio.volume = 0.5;
           break;
       }
       audio.load();
