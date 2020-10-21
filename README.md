@@ -1,4 +1,4 @@
-# Qlik Front-End Assignment - 2048 game
+# README
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.7.
 
@@ -79,3 +79,4 @@ Footer
 Responsive Design for Web, Ipad & Mobile
 
 P.S. In case you are wondering about the second line in the footer here is the explanation: This weekend i had to take care of my uncle’s daughters and i let her choose the colors of the tiles from the Materialize Documentation to keep them busy while i was coding, then i added their name to the footer so they could share the game with their friends.
+
