@@ -14,7 +14,11 @@ This project uses:
 
 ## Live demo
 
-You can check a live demo [HERE](https://mario-herrero-siles.000webhostapp.com/2048/).
+You can check a live demo [HERE](https://mario-herrero-siles.000webhostapp.com/2048/)
+
+## Documentation
+
+You can read the documentation [HERE](https://marioherrerosiles.gitbook.io/2048/)
 
 ## Install
 
