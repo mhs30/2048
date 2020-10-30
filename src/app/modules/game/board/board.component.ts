@@ -114,7 +114,7 @@ export class BoardComponent implements OnInit, OnDestroy {
           if (!!this.board.getScore() && this.board.getScore() > currentSavedScore) {
             localStorage.setItem(LOCAL_STORAGE_KEY, this.board.getScore().toString());
           }
-        } else {
+        } else if (!!this.board.getScore()) {
           localStorage.setItem(LOCAL_STORAGE_KEY, this.board.getScore().toString());
         }
       }
