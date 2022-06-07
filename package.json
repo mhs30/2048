@@ -22,7 +22,7 @@
     "@angular/platform-browser-dynamic": "~10.1.6",
     "@angular/router": "~10.1.6",
     "confetti-js": "0.0.18",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "ngx-device-detector": "^2.0.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
